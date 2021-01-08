@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { LinkContainer } from "react-router-bootstrap";
 import { Navbar, Nav, Container } from 'react-bootstrap';
 
@@ -27,4 +27,4 @@ const Header = () => {
     );
 };
 
-export default Header;
+export default memo(Header);

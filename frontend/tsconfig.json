@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "jsx": "react-jsx",
+    "strictNullChecks": false,
     "esModuleInterop": true,
     "target": "es5",
     "lib": [
