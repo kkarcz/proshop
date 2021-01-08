@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import products from "../products";
 import Product from "../components/Product";
@@ -20,4 +20,4 @@ const HomeScreen = () => {
     );
 };
 
-export default HomeScreen;
+export default memo(HomeScreen);
