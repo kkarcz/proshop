@@ -1,4 +1,4 @@
-import React, {memo, useCallback, useMemo, useState, useEffect} from 'react';
+import React, {memo, useCallback, useState, useEffect} from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import {Row, Col, Image, ListGroup, Card, Button, ListGroupItem} from "react-bootstrap";
 import Rating from "../components/Rating";
@@ -9,14 +9,14 @@ interface ProductScreenProps extends RouteComponentProps<{ id: string }> {}
 const ProductScreen = ({ match }: ProductScreenProps) => {
     const [product, setProduct] = useState(null);
 
-    const fetchProduct = async () => {
+    const fetchProduct = useCallback(async () => {
         const { data } = await axios.get(`/api/products/${match.params.id}`);
         setProduct(data);
-    }
+    }, [match])
 
     useEffect(() => {
         fetchProduct();
-    }, []);
+    }, [match.params.id]);
 
     const isButtonDisabled = useCallback(() => {
         return product?.countInStock === 0;
