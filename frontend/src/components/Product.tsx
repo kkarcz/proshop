@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Card } from 'react-bootstrap';
 import Rating from './Rating';
 
-interface IProduct {
+export interface IProduct {
     _id: string;
     name: string;
     image: string;
