@@ -13,3 +13,10 @@ h3 {
 .rating span {
     margin: 2px;
 }
+
+.spinner {
+    width: 100px;
+    height: 100px;
+    margin: auto;
+    display: block;
+}
