@@ -18,9 +18,23 @@ interface IProductDetails {
     product: IProduct;
 }
 
+interface ICart {
+    cartItems: ICartItem[];
+};
+
+export interface ICartItem {
+    productId: string;
+    name: string;
+    image: string;
+    price: number;
+    countInStock: number;
+    qty: number;
+}
+
 export interface IState {
     productList: IProductList;
     productDetails: IProductDetails;
+    cart: ICart;
 }
 
 const HomeScreen = () => {
