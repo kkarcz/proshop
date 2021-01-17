@@ -39,7 +39,7 @@ const CartScreen = ({ match, location, history }: ICartScreenProps) => {
 
     const removeFromCartHandler = useCallback((id: string) => {
         dispatch(removeFromCart(id))
-    }, [])
+    }, [dispatch])
 
     const checkoutHandler = () => {
         history.push(`/login?redirect=shipping`)
