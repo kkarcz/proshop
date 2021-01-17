@@ -5,7 +5,8 @@ import {
     PRODUCT_DETAILS_SUCCESS,
     PRODUCT_LIST_FAIL,
     PRODUCT_LIST_REQUEST,
-    PRODUCT_LIST_SUCCESS
+    PRODUCT_LIST_SUCCESS,
+    CLEAR_PRODUCT_DETAILS
 } from '../constants/productConstants';
 
 export const listProducts = () => async (dispatch) => {
@@ -38,4 +39,8 @@ export const listProductDetails = (id) => async (dispatch) => {
             payload: error.message && error.response.data.message ? error.response.data.message : error.message
         })
     }
+}
+
+export const clearProductDetails = () => (dispatch) => {
+    dispatch({ type: CLEAR_PRODUCT_DETAILS })
 }

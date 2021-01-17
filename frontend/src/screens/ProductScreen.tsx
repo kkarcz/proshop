@@ -1,27 +1,49 @@
-import React, {memo, useCallback, useEffect} from 'react';
+import React, {memo, useCallback, useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import {Row, Col, Image, ListGroup, Card, Button, ListGroupItem} from "react-bootstrap";
+import {Row, Col, Image, ListGroup, Card, Button, ListGroupItem, FormControl} from "react-bootstrap";
 import Rating from "../components/Rating";
-import { listProductDetails } from "../actions/productActions";
+import { listProductDetails, clearProductDetails } from "../actions/productActions";
 import { IState } from './HomeScreen';
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 
-interface ProductScreenProps extends RouteComponentProps<{ id: string }> {}
+interface IProductScreenProps extends RouteComponentProps<{ id: string }> {}
 
-const ProductScreen = ({ match }: ProductScreenProps) => {
+const ProductScreen = ({ match, history }: IProductScreenProps) => {
+    const [quantity, setQuantity] = useState(1);
+
     const dispatch = useDispatch();
     const productDetails = useSelector((state: IState) => state.productDetails);
     const { product, loading, error } = productDetails;
 
     useEffect(() => {
         dispatch(listProductDetails(match.params.id));
+
+        return () => dispatch(clearProductDetails())
     }, [dispatch, match.params.id]);
 
     const isButtonDisabled = useCallback(() => {
         return product?.countInStock === 0;
     }, [product?.countInStock]);
+
+    const handleQuantity = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setQuantity(parseInt(event.target.value))
+    }
+
+    const chooseQuantity = useCallback(() => {
+        return (
+            [...Array(product?.countInStock).keys()].map(option => (
+                <option key={option + 1} value={option + 1}>
+                    {option + 1}
+                </option>
+            ))
+        )
+    }, [product.countInStock])
+
+    const addToCartHandler = useCallback(() => {
+        history.push(`/cart/${match.params.id}?qty=${quantity}`)
+    }, [match.params.id, quantity, history])
 
     return (
         <>
@@ -71,8 +93,29 @@ const ProductScreen = ({ match }: ProductScreenProps) => {
                                             </Col>
                                         </Row>
                                     </ListGroupItem>
+                                    {product?.countInStock > 0 && (
+                                        <ListGroupItem>
+                                            <Row>
+                                                <Col>Quantity</Col>
+                                                <Col>
+                                                    <FormControl
+                                                        as='select'
+                                                        value={quantity}
+                                                        onChange={handleQuantity}
+                                                    >
+                                                        { chooseQuantity() }
+                                                    </FormControl>
+                                                </Col>
+                                            </Row>
+                                        </ListGroupItem>
+                                    )}
                                     <ListGroupItem>
-                                        <Button className='btn-block' type='button' disabled={isButtonDisabled()}>
+                                        <Button
+                                            onClick={addToCartHandler}
+                                            className='btn-block'
+                                            type='button'
+                                            disabled={isButtonDisabled()}
+                                        >
                                             Add To Cart
                                         </Button>
                                     </ListGroupItem>
