@@ -31,10 +31,25 @@ export interface ICartItem {
     qty: number;
 }
 
+interface IUser {
+    _id: string;
+    name: string;
+    email: string;
+    isAdmin: boolean;
+    token: string;
+}
+
+interface IUserLogin {
+    error: string;
+    loading: boolean;
+    userInfo: IUser;
+}
+
 export interface IState {
     productList: IProductList;
     productDetails: IProductDetails;
     cart: ICart;
+    userLogin: IUserLogin;
 }
 
 const HomeScreen = () => {
