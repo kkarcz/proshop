@@ -1,14 +1,11 @@
 import React, {memo, useCallback} from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import {RouteComponentProps, withRouter} from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import {Navbar, Nav, Container, NavDropdown} from 'react-bootstrap';
 import {IState} from "../screens/HomeScreen";
 import { logout } from "../actions/userActions";
 
-interface IHeaderProps extends RouteComponentProps {}
-
-const Header = ({ history }: IHeaderProps) => {
+const Header = () => {
     const dispatch = useDispatch();
 
     const userLogin = useSelector((state: IState) => state.userLogin);
@@ -16,8 +13,7 @@ const Header = ({ history }: IHeaderProps) => {
 
     const logoutHandler = useCallback(() => {
         dispatch(logout());
-        history.push('/login');
-    }, [dispatch, history])
+    }, [dispatch])
 
     return (
         <header>
@@ -53,4 +49,4 @@ const Header = ({ history }: IHeaderProps) => {
     );
 };
 
-export default memo(withRouter(Header));
+export default memo(Header);
